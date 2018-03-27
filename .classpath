@@ -22,5 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/spark-assembly-1.6.3.2.6.4.0-91-hadoop2.7.3.2.6.4.0-91.jar"/>
+	<classpathentry kind="lib" path="lib/spark-examples-1.6.3.2.6.4.0-91-hadoop2.7.3.2.6.4.0-91.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
