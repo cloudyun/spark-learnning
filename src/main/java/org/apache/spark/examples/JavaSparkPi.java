@@ -34,9 +34,10 @@ public final class JavaSparkPi {
 
   public static void main(String[] args) throws Exception {
     SparkConf sparkConf = new SparkConf().setAppName("JavaSparkPi");
+    sparkConf.setMaster("local");
     JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 
-    int slices = (args.length == 1) ? Integer.parseInt(args[0]) : 2;
+    int slices = (args.length == 1) ? Integer.parseInt(args[0]) : 10000;
     int n = 100000 * slices;
     List<Integer> l = new ArrayList<Integer>(n);
     for (int i = 0; i < n; i++) {
@@ -46,14 +47,24 @@ public final class JavaSparkPi {
     JavaRDD<Integer> dataSet = jsc.parallelize(l, slices);
 
     int count = dataSet.map(new Function<Integer, Integer>() {
-      @Override
+      /**
+		 * 
+		 */
+		private static final long serialVersionUID = 6924043001038431366L;
+
+	@Override
       public Integer call(Integer integer) {
         double x = Math.random() * 2 - 1;
         double y = Math.random() * 2 - 1;
         return (x * x + y * y < 1) ? 1 : 0;
       }
     }).reduce(new Function2<Integer, Integer, Integer>() {
-      @Override
+      /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2168532377294794559L;
+
+	@Override
       public Integer call(Integer integer, Integer integer2) {
         return integer + integer2;
       }
@@ -62,5 +73,6 @@ public final class JavaSparkPi {
     System.out.println("Pi is roughly " + 4.0 * count / n);
 
     jsc.stop();
+    jsc.close();
   }
 }
