@@ -63,10 +63,10 @@ public final class JavaALS {
 
 	public static void main(String[] args) {
 		String data_path = System.class.getResource("/resources").getPath() + "/data/mllib/als/test.data";
-		int rank = 5;
-		int iterations = 2;
+		int rank = 50;
+		int iterations = 10;
 		String outputDir = "E:/spark/als";
-		int blocks = 3;
+		int blocks = 1;
 		
 		SparkConf sparkConf = new SparkConf().setAppName("JavaALS");
 		sparkConf.setMaster("local");
