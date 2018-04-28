@@ -19,6 +19,7 @@ import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.kafka.HasOffsetRanges;
 import org.apache.spark.streaming.kafka.KafkaUtils;
 import org.apache.spark.streaming.kafka.OffsetRange;
+import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 
 import com.fhzz.vo.Message;
@@ -144,9 +145,8 @@ public class DidVidAnalysizeM {
 			public void call(JavaRDD<String> rdd) throws Exception {
 				for (OffsetRange o : _macoffsetRanges) {
 					String zkPath = _CaptureTopicDirs.consumerOffsetDir() + "/" + o.partition();
-					List<ACL> acls = ZkUtils.apply(sm.zkClient, false).updatePersistentPath$default$3();
-					ZkUtils.apply(sm.zkClient, false).updatePersistentPath(zkPath, String.valueOf(o.fromOffset()),
-							acls);
+					ZkUtils.apply(sm.zkClient, false).updatePersistentPath(zkPath, String.valueOf(o.fromOffset()), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+//					new ZkUtils(sm.zkClient, null, false).updatePersistentPath(zkPath, String.valueOf(o.fromOffset()), ZooDefs.Ids.OPEN_ACL_UNSAFE);
 				}
 			}
 		});
