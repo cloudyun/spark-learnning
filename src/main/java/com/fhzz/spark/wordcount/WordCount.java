@@ -1,6 +1,7 @@
 package com.fhzz.spark.wordcount;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -18,7 +19,6 @@ import org.apache.spark.streaming.kafka.KafkaUtils;
 
 import scala.Tuple2;
 
-import com.google.common.collect.Lists;
 
 public class WordCount {
 
@@ -67,7 +67,7 @@ public class WordCount {
             private static final long serialVersionUID = 1L;
 
             public Iterable<String> call(Tuple2<String, String> value) throws Exception {
-                return Lists.newArrayList(SPACE.split(value._2));
+                return Arrays.asList(SPACE.split(value._2));
             }
         });
 
